@@ -9,6 +9,11 @@ searchBtn.addEventListener("click", async () => {
   displayBooks(books);
 });
 
+function createReview(ID){
+  alert(ID);
+  window.location.href = `bookpage.html?id=${ID}`;
+};
+
 function displayBooks(books) {
   const container = document.getElementById("results");
   container.innerHTML = "";
@@ -27,7 +32,9 @@ function displayBooks(books) {
       <p>${book.year || "No year available"}</p>
       ${coverUrl ? `<img src="${coverUrl}" />` : ""}
     `;
-
+    div.addEventListener("click", async () => {
+      createReview(book.key);
+    })
     container.appendChild(div);
   });
 }

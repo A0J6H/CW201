@@ -4,7 +4,7 @@ document.getElementById("next").addEventListener("click", () => {
 });
 
 document.getElementById("dbTest").addEventListener("click", () => {
-  fetch("http://localhost:5000/db/users")
+  fetch("http://localhost:5000/auth/users")
   .then(res => res.json())
   .then(data => {
     const users = data; // all users stored in a variable

@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
     res.send("Server running");
 });
 
-app.use("/db",require("./routes/auth"));
+app.use("/auth",require("./routes/auth"));
 
 
 app.listen(5000, () => {
