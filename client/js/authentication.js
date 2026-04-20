@@ -2,3 +2,24 @@
 document.getElementById("next").addEventListener("click", () => {
   window.location.href = "dashboard.html";
 });
+
+document.getElementById("dbTest").addEventListener("click", () => {
+  fetch("http://localhost:5000/test-db")
+  .then(res => res.json())
+  .then(data => {
+    const users = data; // all users stored in a variable
+
+    console.log(users);
+
+    // optional: extract specific fields if needed
+    const usernames = users.map(user => user.username);
+    const emails = users.map(user => user.email);
+
+    console.log(usernames);
+    console.log(emails);
+  })
+  .catch(err => console.error(err));
+});
+
+
+
