@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const db = require("../db/db");
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res) => {//gets books based of a title search
   const query = req.query.q;
 
   try {
@@ -11,7 +12,6 @@ router.get("/", async (req, res) => {
 
     const data = await response.json();
 
-    // Clean the data
     const books = data.docs.slice(0, 10).map(book => ({
       title: book.title,
       author: book.author_name?.join(", "),
@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/book", async (req, res) => {
+router.get("/book", async (req, res) => {//gets details for a specific book using the key
   const query = req.query.q;
 
   try {
@@ -38,18 +38,47 @@ router.get("/book", async (req, res) => {
 
     const data = await response.json();
 
-    // Clean the data
     const book = {
       title: data.title,
       description: typeof data.description === "object"
         ? data.description.value
         : data.description,
       coverId: data.covers?.[0],
-      subjects: data.subjects?.slice(0, 5)
+      subjects: data.subjects?.slice(0, 5),
+      authorKey: data.authors?.[0]?.author?.key
     };
 
     res.json(book);
 
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch the book" });
+  }
+});
+
+router.post("/dbCheck", async (req, res) => {//Checks if book is in db, if not insert 
+  const { title, author, cover, apiID } = req.body;
+
+  try {
+    db.query(`SELECT * FROM books WHERE apiID = '${apiID}'`, (err, results) => {
+      if (err) return res.status(500).json(err);
+      console.log(results.length);
+      if (results.length!=1){
+        db.query("INSERT INTO books (title, author, cover, apiID) VALUES (?, ?, ?, ?)",[title, author, cover, apiID]);
+        console.log("inserted")
+        res.json({
+          message: "Book inserted successfully",
+          bookID: results.insertId
+        });
+      }
+      else{
+        console.log("exists")
+        res.json({
+          message: "Book exist",
+          bookID: results.bookID
+        });
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch the book" });
