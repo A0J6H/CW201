@@ -3,12 +3,21 @@ const bookId = params.get("id");
 
 document.addEventListener("DOMContentLoaded", async () => {
     console.log(bookId);
+    const coverImage = document.getElementById("bookCover");
 
     const res = await fetch(`http://localhost:5000/api/books/book?q=${bookId}`);
     const data = await res.json();
 
-    console.log(data.title);
-    console.log(data.authorKey);
+    document.getElementById("bookTitle").textContent = data.title;
+    document.getElementById("bookDescription").textContent = data.description;
+
+    coverImage.alt = data.title;
+
+    const coverUrl = data.coverId
+      ? `https://covers.openlibrary.org/b/id/${data.coverId}-M.jpg`
+      : "";
+
+    coverImage.src = coverUrl;
 
     fetch("http://localhost:5000/api/books/dbCheck", {//Checks to see if the book alreaedy exists in the db, If not inserts it
         method: "POST",
@@ -27,6 +36,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(data);
     })
     .catch(err => console.error(err));
+
+    
+    
 
     
 });
