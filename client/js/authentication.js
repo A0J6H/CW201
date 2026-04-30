@@ -30,7 +30,7 @@ document.getElementById("next").addEventListener("click", () => {
 });
 
 document.getElementById("dbTest").addEventListener("click", () => {
-  fetch("http://127.0.0.1:5000/auth/users")
+  fetch("http://localhost:5000/auth/users")
   .then(res => res.json())
   .then(data => {
     const users = data; // all users stored in a variable
@@ -58,7 +58,7 @@ document.getElementById("signUpBtn").addEventListener("click", async () => {
   const confirmPassword = document.getElementById("confirmPassword").value;
 
   try {
-  const res = await fetch("http://127.0.0.1:5000/auth/register", {
+  const res = await fetch("http://localhost:5000/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, email, password, confirmPassword })
@@ -89,11 +89,12 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
   const password = document.getElementById("loginPassword").value;
 
   try {
-    const res = await fetch("http://127.0.0.1:5000/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ identifier, password })
-    });
+      const res = await fetch("http://127.0.0.1:5000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",  
+        body: JSON.stringify({ identifier, password })
+      });
 
     const data = await res.json();
 

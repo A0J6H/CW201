@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // send a request for profile, includes the JWT in the header
         // route is: profile.js -> authmiddleware.js -> auth.js if successful
         // because we're using refresh tokens, we need a fetchWithAuth instead of fetch
-        const res = await fetchWithAuth("http://127.0.0.1:5000/auth/profile", {
+        const res = await fetchWithAuth("http://localhost:5000/auth/profile", {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -55,7 +55,7 @@ document.getElementById("redirectBtn").addEventListener("click", () => {
 document.getElementById("logoutBtn").addEventListener("click", async () => {
 
     // remove refresh token (via auth.js)
-    await fetch("http://127.0.0.1:5000/auth/logout", {
+    await fetch("http://localhost:5000/auth/logout", {
         method: "POST",
         credentials: "include"
     });

@@ -15,7 +15,7 @@ const fetchWithAuth = async (url, options = {}) => {
     // when testing tokens, i ran into a few 403's and couldn't find the direct cause, so here's a fix to handle them:
     // if it 403's, try refreshing the token first
     if (res.status === 403) {
-        const refreshRes = await fetch("http://127.0.0.1:5000/auth/refresh", {
+        const refreshRes = await fetch("http://localhost:5000/auth/refresh", {
             method: "POST",
             credentials: "include"
         });
