@@ -35,10 +35,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     .then(data => {
         console.log(data);
     })
+
+
     .catch(err => console.error(err));
 
-    
-    
+        fetch("http://localhost:5000/api/books/reviewInsert", {//Adds the review to the mysql db
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+        userID: 1,
+        bookID: 8,
+        status: "read",
+        review: "Test",
+        rating: 5,
+        })//userID, bookID, status, review, rating
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => console.error(err));
 
-    
+
 });
