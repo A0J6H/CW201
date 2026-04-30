@@ -1,8 +1,39 @@
-<!DOCTYPE html><!--Login/Create Account Page-->
+<!DOCTYPE html>
+
+<!--Login/Create Account Page-->
+
 <html>
+    <head>
+        <title>Homepage</title>
+        <link rel="stylesheet" href="css/index.css">
+    </head>
+
     <body>
-        <button id="next">Click Me</button>
-        <button id="dbTest">Click Me to test db</button>
-        <script src="js/authentication.js"></script>
+        <button id="next">Click Me (book search)</button>
+        <button id="dbTest">Click Me to test Users db</button>
+
+        <div><img id="mascot" src="images/mascot.png" alt="mascot"></div>
+
+        <div id="container">
+            <div id = "loginDiv">
+                <h2>Log in</h2>
+                <input id="loginUser" type="text" value="" placeholder="Enter username or email">
+                <input id="loginPassword" type="password" value="" placeholder="Enter password">
+                <button id="loginBtn">Log in</button>
+            </div>
+
+            <div id = "signUpDiv">
+                <h2>Sign up</h2>
+                <input id="signUpUser" type="text" value="" placeholder="Enter username">
+                <input id="signUpEmail" type="text" value="" placeholder="Enter email">
+                <input id="signUpPassword" type="text" value="" placeholder="Enter password">
+                <input id="confirmPassword" type="text" value="" placeholder="Confirm password">
+                <button id="signUpBtn">Sign up</button>
+            </div>
+
+        </div>
+
+
+    <script src="js/authentication.js"></script>
     </body>
 </html>

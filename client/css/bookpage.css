@@ -1,0 +1,64 @@
+#reviewSection
+{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+}
+
+#buttons{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+#ratingInput
+{
+    width:150px;
+    margin-bottom: 20px;
+}
+
+#reviewInput
+{
+  width: 300px;
+  height: 100px;
+
+  margin-bottom: 20px;
+  margin-right: 100px;
+}
+
+button{
+
+    font-size:17px;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: white;
+    border-radius: 25px;
+    cursor: pointer;
+
+    height: 5vh;
+    width: 15vw;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+    transition-duration: 0.5s;
+}
+
+#submitReview{
+    margin-right:80%;
+}
+
+#quit{
+    border: 2px solid rgb(228, 84, 84);
+}
+
+#quit:hover {
+    background-color: rgb(228, 84, 84);
+    color: white;
+    transition-duration: 0.5s;
+}
+
+body
+{
+    font-family: Arial;
+}

@@ -12,6 +12,11 @@ router.get("/", async (req, res) => {//gets books based of a title search
 
     const data = await response.json();
 
+    // sometimes the API times out with a 500 error, so here's a way of handling it
+    if (!data || !data.docs) {
+      return res.status(503).json({ error: "Open Library Search is currently unavailable, please try again later!" });
+    }
+
     const books = data.docs.slice(0, 10).map(book => ({
       title: book.title,
       author: book.author_name?.join(", "),

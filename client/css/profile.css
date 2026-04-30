@@ -1,0 +1,36 @@
+body
+{
+    font-family: Arial;
+}
+
+button{
+
+    font-size:17px;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: white;
+    border-radius: 25px;
+    cursor: pointer;
+
+    height: 5vh;
+    width: 15vw;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+    transition-duration: 0.5s;
+}
+
+#logoutBtn{
+    border: 2px solid rgb(228, 84, 84);
+}
+
+#logoutBtn:hover {
+    background-color: rgb(228, 84, 84);
+    color: white;
+    transition-duration: 0.5s;
+}
+
+#profileContainer{
+    margin-bottom:50px;
+}

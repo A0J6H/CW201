@@ -1,13 +1,33 @@
 <!DOCTYPE html><!--book/author page-->
 <html>
+
+    <head>
+        <title>Review a book</title>
+        <link rel="stylesheet" href="css/bookpage.css">
+    </head>
+
     <body>
         <h1 id="bookTitle"></h1>
         <img id="bookCover"/>
+
         <h2>Book Description</h2>
         <p id="bookDescription"></p>
-        <input type="text" id="reviewInput" placeholder="Enter a review..."/>
-        <input type="text" id="ratingInput" placeholder="Rating 0-5..."/>
-        <button id="submitReview"></button>
+
+        <div id = "reviewSection">
+            <div id="reviewBox"> 
+                <input type="text" id="reviewInput" placeholder="Enter a review..."/>
+            </div>
+
+            <div id = "rateBox">
+                <input type="text" id="ratingInput" placeholder="Rating 0-5..."/>
+            </div>
+        </div>
+        
+        <div id ="buttons">
+            <button id="submitReview">Submit review</button>
+            <button id="quit" onclick="window.location.href='dashboard.html';">Quit</button>
+        </div>
+
         <script src="js/bookpage.js"></script>
     </body>
 </html>

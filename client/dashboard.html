@@ -1,8 +1,27 @@
 <!DOCTYPE html><!--Search/Home Page-->
 <html>
+    <head>
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="css/dashboard.css">
+    </head>
+
+    <header>
+        <img id="mascot" src="images/mascot.png" alt="mascot">
+        <button id = "profileBtn">Go to profile</button>
+    </header>
+
     <body>
-        <input type="text" id="searchInput" placeholder="Search for Books or Clubs..."/>
-        <button id="searchBtn">Search</button>
+        <div id="container">
+
+            <div>
+                <span id="title">Search for Books or Clubs</span>
+            </div>
+
+            <div>
+                <input type="text" id="searchInput" placeholder="Search for Books or Clubs..."/>
+                <button id="searchBtn">Search</button>
+            </div>
+        </div>
 
         <div id="results"></div>
 

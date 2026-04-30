@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log(bookId);
     const coverImage = document.getElementById("bookCover");
 
-    const res = await fetch(`http://localhost:5000/api/books/book?q=${bookId}`);
+    const res = await fetch(`http://127.0.0.1:5000/api/books/book?q=${bookId}`);
     const data = await res.json();
 
     document.getElementById("bookTitle").textContent = data.title;
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     coverImage.src = coverUrl;
 
-    fetch("http://localhost:5000/api/books/dbCheck", {//Checks to see if the book alreaedy exists in the db, If not inserts it
+    fetch("http://127.0.0.1:5000/api/books/dbCheck", {//Checks to see if the book alreaedy exists in the db, If not inserts it
         method: "POST",
         headers: {
         "Content-Type": "application/json"

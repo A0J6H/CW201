@@ -1,0 +1,117 @@
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+#loginDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-right:25%;
+    margin-top:2%;
+
+    height: 45vh;
+    width: 20vw;
+
+    background-color:honeydew;
+    border-radius:25px;
+    border: 2px solid;
+    border-color:rgb(167, 202, 167);
+
+}
+
+
+#loginBtn{
+    border: 2px solid rgb(167, 202, 167);
+}
+
+#loginBtn:hover{
+    background-color:rgb(167, 202, 167);
+    color: white;
+    transition-duration: 0.5s;
+}
+
+
+input{
+    font-size:17px;
+}
+
+button{
+    margin-bottom:20px;
+    margin-top:40px;
+
+    font-size:17px;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: white;
+    border-radius: 25px;
+    cursor: pointer;
+
+    height: 5vh;
+    width: 15vw;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+    transition-duration: 0.5s;
+}
+
+#dbTest{
+    width: 17vw;
+    margin-top:2px;
+}
+
+#next {
+    margin-top:2px;
+}
+
+
+
+#signUpDiv{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+
+    height: 55vh;
+    width: 20vw;
+
+    background-color:lavender;
+    border-radius:25px;
+    border: 2px solid;
+    border-color:rgb(201, 201, 250);
+}
+
+#signUpBtn{
+    border: 2px solid rgb(201, 201, 250);
+}
+
+#signUpBtn:hover{
+    background-color:rgb(201, 201, 250);
+    color: white;
+    transition-duration: 0.5s;
+}
+
+
+#next{
+    margin-right: 5%;
+    font-size: 17px;
+}
+
+#dbTest { font-size: 17px; }
+
+body
+{
+    font-family: Arial;
+}
+
+#mascot{
+    width:75px;
+    height:75px;
+    margin-top: 20px;
+}

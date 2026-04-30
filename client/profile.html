@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Profile</title>
+        <link rel="stylesheet" href="css/profile.css">
+    </head>
+
+    <body>
+        <h1>Profile</h1>
+
+        <div id="profileContainer">
+            <p id="username"></p>
+            <p id="email"></p>
+            <p id="createdAt"></p>
+        </div>
+
+
+        <button id = "redirectBtn">Back to search</button>
+        <br><br><br><br>
+        <button id="logoutBtn">Log out</button>
+
+
+        <!-- note: token.js is necessary on any page that makes auth requests! -->
+        <script src="js/token.js"></script>
+        <script src="js/profile.js"></script>
+    </body>
+</html>

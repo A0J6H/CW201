@@ -3,8 +3,14 @@ const searchBtn = document.getElementById("searchBtn");
 searchBtn.addEventListener("click", async () => {
   const query = document.getElementById("searchInput").value;
 
-  const res = await fetch(`http://localhost:5000/api/books?q=${query}`);
+  const res = await fetch(`http://127.0.0.1:5000/api/books?q=${query}`);
   const books = await res.json();
+
+  // if the API times out...
+  if (!res.ok) {
+    document.getElementById("results").textContent = "Search failed, please try again later!";
+    return;
+  }
 
   displayBooks(books);
 });
@@ -38,3 +44,11 @@ function displayBooks(books) {
     container.appendChild(div);
   });
 }
+
+
+const profileBtn = document.getElementById("profileBtn");
+
+profileBtn.addEventListener("click", async () => {
+  console.log("presed")
+  window.location.href = "profile.html";
+})
