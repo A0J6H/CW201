@@ -7,12 +7,47 @@
     </head>
 
     <body>
-        <h1>Profile</h1>
-
         <div id="profileContainer">
-            <p id="username"></p>
-            <p id="email"></p>
-            <p id="createdAt"></p>
+
+            <div id="profileHeader">
+                <p id="username">@pierceg's Library</p>
+                <p id="bio">Bio stuff like i love books especially horror ones and my favourite author is JRR Tolkien </p>
+            </div>
+
+            <div id="profileDetailsContainer">
+
+                <div id="favouriteBook">
+                    <h2>Favourite Book</h2>
+                    <p id="favouriteBooks">The Lord of the Rings</p>
+                </div>
+                <div class="vl"></div>
+                <div id="createdAt">
+                    <h2>User Since</h2>
+                    <p id="createdAt">12/06/25</p>
+                </div>
+
+            </div>
+
+            <div id="collectionContainer">
+
+                <h1>Collection</h1>
+
+                <div id="bookDisplayContainer">
+
+                    <div class="bookContainer">
+
+                        <p id="bookTitle">The Book of Books</p>
+                        <img id="bookCover" src="https://covers.openlibrary.org/b/isbn/9780385533225-S.jpg">
+
+                        <hr>
+
+                        <p id="bookRating">1</p>
+                        <p id="bookReview">it was alright</p>
+
+                    </div>
+                    
+                </div>
+            </div>
         </div>
 
 
@@ -23,6 +58,6 @@
 
         <!-- note: token.js is necessary on any page that makes auth requests! -->
         <script src="js/token.js"></script>
-        <script src="js/profile.js"></script>
+        <!-- <script src="js/profile.js"></script> -->
     </body>
 </html>

@@ -1,5 +1,6 @@
 body
 {
+    background-color: honeydew;
     font-family: Arial;
 }
 
@@ -21,6 +22,12 @@ button:hover {
     transition-duration: 0.5s;
 }
 
+.vl {
+  border-left: 2px solid black;
+  height: 100px;
+  width: 2px;
+}
+
 #logoutBtn{
     border: 2px solid rgb(228, 84, 84);
 }
@@ -34,3 +41,88 @@ button:hover {
 #profileContainer{
     margin-bottom:50px;
 }
+
+/* Profile Page Elements */
+/* Containers */
+
+#profileContainer {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+#collectionContainer{
+    grid-row: 3;
+    grid-column: 1 / -1;
+    justify-items: center;
+}
+
+#bookDisplayContainer{
+    display: grid;
+    grid-row: 2;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    width: 80%;
+}
+
+.bookContainer{
+    border: 2px solid rgb(167, 202, 167);
+    width: 1fr;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#profileHeader{
+    grid-row: 1;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-items: start;
+}
+
+#profileDetailsContainer{
+    grid-row: 2;
+    grid-column: 1/-1;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+
+    width: auto;
+    justify-items: center;
+    text-align: center;
+    border: 2px solid black;
+}
+
+/* Header Elements */
+#username{
+    font-weight: bold;
+    font-size:x-large;
+    text-decoration: underline;
+}
+
+#bio{
+    font-size: medium;
+    grid-row: 2;
+}
+
+/* Profile Detail Elements */
+#profileDetailsContainer h2{
+    grid-row: 1;
+    text-decoration: underline;
+    width: 100%
+}
+#profileDetailsContainer p{
+    grid-row: 2;
+    width: 100%
+}
+
+#profileDetailsContainer .vl{
+    grid-column: 2;
+    grid-row: 1 / -1;
+    width: 1%;
+}
+/* Book Display Elements */
+#bookDisplayContainer img{
+    box-shadow: 1px 1px 5px rgb(146, 165, 146);
+    width: 40%;
+}
+

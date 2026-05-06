@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log("no token detected");
         return;
     }
+    
 
     try {
         // send a request for profile, includes the JWT in the header
@@ -28,11 +29,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (res.ok) {
             // if token valid, display details
             document.getElementById("username").textContent = `Username: ${data.username}`;
-            document.getElementById("email").textContent = `Email: ${data.email}`;
-
             // the raw createdAt datetime comes out a little odd-looking, keep only the first 10 chars
             formattedDate = data.createdAt.slice(0,10)
             document.getElementById("createdAt").textContent = `Member since: ${formattedDate}`;
+
+            //get id=bio
+            //get id=favouriteBooks - set href review page
+
+            //for id=bookContainer
+            //get each id=bookTitle, bookCover - set href review page, bookRating, bookReview
         } 
         
         else {
