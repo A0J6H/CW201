@@ -123,4 +123,31 @@ router.get("/bookID", (req, res) => {
   }
 });
 
+router.get("/userBooks", (req, res) => {
+  const userID = req.query.q;
+  let resultsArray = [];
+  let length;
+  try {
+        db.query('SELECT bookID FROM user_books WHERE userID = ? ORDER BY lastAccessed DESC', [userID], (err, results) => {
+        if (err) return res.status(500).json(err);
+        length = results.length;
+        for (let i = 0; i < results.length; i++) {
+          db.query('SELECT apiID FROM books WHERE bookID = ?', [results[i].bookID], (err, results2) => {
+            if (err) return res.status(500).json(err);
+            console.log(results2[0]);
+            resultsArray.push(results2[0]);
+            if (length == resultsArray.length) {
+              res.json(resultsArray);
+            }
+          });
+        }
+
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch bookID" });
+  }
+});
+
 module.exports = router;
