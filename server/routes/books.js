@@ -103,10 +103,6 @@ router.post("/reviewInsert", async (req, res) => {//Checks if book is in db, if 
     console.log("Already inserted");
     db.query(`UPDATE user_books SET review = ?, rating = ?, lastAccessed = CURRENT_TIMESTAMP WHERE userID = ? AND bookID = ?`,[review, rating, userID, bookID]);
   }
-
-
-
-
 });
 
 module.exports = router;
