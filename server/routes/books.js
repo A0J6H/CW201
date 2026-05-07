@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
+const { error } = require("node:console");
 
 router.get("/", async (req, res) => {//gets books based of a title search
   const query = req.query.q;
@@ -62,7 +63,7 @@ router.get("/book", async (req, res) => {//gets details for a specific book usin
 });
 
 router.post("/dbCheck", async (req, res) => {//Checks if book is in db, if not insert 
-  const { title, author, cover, apiID } = req.body;
+  const { title, author, cover, apiID, userID} = req.body;
 
   try {
     db.query(`SELECT * FROM books WHERE apiID = '${apiID}'`, (err, results) => {
@@ -78,9 +79,10 @@ router.post("/dbCheck", async (req, res) => {//Checks if book is in db, if not i
       }
       else{
         console.log("exists")
-        res.json({
-          message: "Book exist",
-          bookID: results.bookID
+        db.query('SELECT bookID FROM books WHERE apiID = ?', [apiID], (err, results) => {
+          if (err) return res.status(500).json(err);
+          const bookID = results[0].bookID;
+          db.query(`UPDATE user_books SET lastAccessed = CURRENT_TIMESTAMP WHERE userID = ? AND bookID = ?`,[userID, bookID]);
         });
       }
     });
@@ -94,14 +96,30 @@ router.post("/reviewInsert", async (req, res) => {//Checks if book is in db, if 
   const { userID, bookID, status, review, rating } = req.body;
 
   try{
-      db.query("INSERT INTO user_books (userID, bookID, status, review, rating, lastAccessed) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",[userID, bookID, status, review, rating],(err,results));
+      db.query("INSERT INTO user_books (userID, bookID, status, review, rating, lastAccessed) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",[userID, bookID, status, review, rating]);
       console.log("inserted")
       res.json({
         message: "Book inserted successfully"
   });
   }catch{
     console.log("Already inserted");
+    console.log(error);
     db.query(`UPDATE user_books SET review = ?, rating = ?, lastAccessed = CURRENT_TIMESTAMP WHERE userID = ? AND bookID = ?`,[review, rating, userID, bookID]);
+  }
+});
+
+router.get("/bookID", (req, res) => {
+  const apiID = req.query.q;
+
+  try {
+        db.query('SELECT bookID FROM books WHERE apiID = ?', [apiID], (err, results) => {
+        if (err) return res.status(500).json(err);
+            res.json(results);
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch bookID" });
   }
 });
 
