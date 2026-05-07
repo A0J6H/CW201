@@ -34,7 +34,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("createdAt").textContent = `Member since: ${formattedDate}`;
 
             //get id=bio
+
+            document.getElementById("bio").textContent = data.bio;
             //get id=favouriteBooks - set href review page
+            const favouriteBooks = data.favouriteBooks;
 
             //for id=bookContainer
             //get each id=bookTitle, bookCover - set href review page, bookRating, bookReview
