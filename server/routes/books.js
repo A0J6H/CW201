@@ -93,10 +93,6 @@ router.post("/dbCheck", async (req, res) => {//Checks if book is in db, if not i
 router.post("/reviewInsert", async (req, res) => {//Checks if book is in db, if not insert 
   const { userID, bookID, status, review, rating } = req.body;
 
-  const currentTime = new Date().toLocaleString("en-GB", {
-  hour12: false
-  });
-
   try{
       db.query("INSERT INTO user_books (userID, bookID, status, review, rating, lastAccessed) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",[userID, bookID, status, review, rating],(err,results));
       console.log("inserted")
@@ -105,7 +101,7 @@ router.post("/reviewInsert", async (req, res) => {//Checks if book is in db, if 
   });
   }catch{
     console.log("Already inserted");
-    db.query(`UPDATE user_books SET lastAccessed = CURRENT_TIMESTAMP WHERE userID = ? AND bookID = ?`);
+    db.query(`UPDATE user_books SET review = ?, rating = ?, lastAccessed = CURRENT_TIMESTAMP WHERE userID = ? AND bookID = ?`,[review, rating, userID, bookID]);
   }
 
 
