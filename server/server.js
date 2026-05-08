@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/books",require("./routes/books"));
-
+app.use("/api/authors",require("./routes/authors"));
 
 app.get("/", (req, res) => {
     res.send("Server running");
