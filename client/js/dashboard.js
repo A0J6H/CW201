@@ -18,29 +18,98 @@ searchBtn.addEventListener("click", async () => {
 function createReview(ID){
   alert(ID);
   window.location.href = `bookpage.html?id=${ID}`;
-};
+}; 
+
+// Retrieve the stored access token (matches how auth.js stores it)
+function getToken() {
+  return localStorage.getItem("token");
+}
+
+async function addToWishlist(book, btn) {
+  const token = getToken();
+  if (!token) {
+    alert("You need to be logged in to save books to your wishlist.");
+    return;
+  }
+
+  // Disable button immediately to prevent double-clicks
+  btn.disabled = true;
+  btn.textContent = "Saving...";
+
+  try {
+    const res = await fetch("http://localhost:5000/api/wishlist", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        book_key: book.key,
+        title: book.title,
+        author: book.author || null,
+        year: book.year || null,
+        cover_id: book.coverId || null
+      })
+    });
+
+    if (res.status === 409) {
+      // Already in wishlist
+      btn.textContent = "✓ Saved";
+      btn.classList.add("wishlisted");
+      return;
+    }
+
+    if (!res.ok) {
+      btn.disabled = false;
+      btn.textContent = "♡ Wishlist";
+      alert("Failed to add to wishlist, please try again.");
+      return;
+    }
+
+    // Success
+    btn.textContent = "✓ Saved";
+    btn.classList.add("wishlisted");
+
+  } catch (err) {
+    console.error("Wishlist error:", err);
+    btn.disabled = false;
+    btn.textContent = "♡ Wishlist";
+  }
+}
 
 function displayBooks(books) {
   const container = document.getElementById("results");
   container.innerHTML = "";
 
   books.forEach(book => {
-    console.log(book.title)
+    console.log(book.title);
     const div = document.createElement("div");
 
     const coverUrl = book.coverId
       ? `https://covers.openlibrary.org/b/id/${book.coverId}-M.jpg`
       : "";
 
+    // FIX: wishlist button must be in the innerHTML so querySelector can find it
     div.innerHTML = `
       <h3>${book.title}</h3>
-      <p>${book.author || "Unknown author"}</p>
+      <p><a href="authors.html?author=${encodeURIComponent(book.author || "Unknown author")}"
+        onclick="event.stopPropagation()">${book.author || "Unknown author"}</a></p>
       <p>${book.year || "No year available"}</p>
       ${coverUrl ? `<img src="${coverUrl}" />` : ""}
+      <button class="wishlist-btn" onclick="event.stopPropagation()">♡ Wishlist</button>
     `;
+
+    // Wire up wishlist button
+    const wishlistBtn = div.querySelector(".wishlist-btn");
+    wishlistBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      addToWishlist(book, wishlistBtn);
+    });
+
     div.addEventListener("click", async () => {
       createReview(book.key);
-    })
+    });
+
     container.appendChild(div);
   });
 }
@@ -51,9 +120,14 @@ const profileBtn = document.getElementById("profileBtn");
 profileBtn.addEventListener("click", async () => {
   console.log("presed")
   window.location.href = "profile.html";
-})
+});
 
-function addBook(div,coverUrl,book) {
+const wishlistBtn = document.getElementById("wishlistBtn"); 
+wishlistBtn.addEventListener("click", async () => { 
+  window.location.href = "wishlist.html";
+});
+
+function addBook(div, coverUrl, book) {
   const scroller = document.getElementById(div);
 
   // Create a new image
@@ -111,6 +185,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         ? `https://covers.openlibrary.org/b/id/${data.coverId}-M.jpg`
         : "";
 
-      addBook("recentlyViewed",coverUrl,apiID);
+      addBook("recentlyViewed", coverUrl, apiID);
     };
 });
