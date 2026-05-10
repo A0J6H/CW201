@@ -1,7 +1,7 @@
 body
 {
     background-color: honeydew;
-    font-family: Arial;
+    font-family: sans-serif;
 }
 
 button{
@@ -40,6 +40,8 @@ button:hover {
 
 #profileContainer{
     margin-bottom:50px;
+    padding: 10px;
+    gap: 10px;
 }
 
 /* Profile Page Elements */
@@ -54,6 +56,10 @@ button:hover {
     grid-row: 3;
     grid-column: 1 / -1;
     justify-items: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgb(218, 218, 218);
+    padding: 10px;
 }
 
 #bookDisplayContainer{
@@ -61,14 +67,17 @@ button:hover {
     grid-row: 2;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
+    padding: 10px;
     width: 80%;
 }
 
 .bookContainer{
-    border: 2px solid rgb(167, 202, 167);
+    background-image: linear-gradient(rgb(166, 255, 107), rgb(134, 238, 181));
     width: 1fr;
     border-radius: 5px;
     text-align: center;
+    box-shadow: 1px 1px 5px rgb(218, 218, 218);
+    font-weight: bold;
 }
 
 #profileHeader{
@@ -77,6 +86,11 @@ button:hover {
     display: grid;
     grid-template-rows: auto auto;
     justify-items: start;
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px rgb(154, 219, 154);
 }
 
 #profileDetailsContainer{
@@ -86,10 +100,12 @@ button:hover {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
 
+    background-color: rgb(255, 255, 255);
     width: auto;
     justify-items: center;
     text-align: center;
-    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgb(218, 218, 218);
 }
 
 /* Header Elements */
@@ -97,11 +113,6 @@ button:hover {
     font-weight: bold;
     font-size:x-large;
     text-decoration: underline;
-}
-
-#bio{
-    font-size: medium;
-    grid-row: 2;
 }
 
 /* Profile Detail Elements */
@@ -122,7 +133,12 @@ button:hover {
 }
 /* Book Display Elements */
 #bookDisplayContainer img{
-    box-shadow: 1px 1px 5px rgb(146, 165, 146);
+    box-shadow: 1px 1px 5px rgb(235, 255, 235);
     width: 40%;
+}
+
+#bookDisplayContainer img:hover{
+    box-shadow: 2px 2px 20px rgb(236, 255, 236);
+    transform: scale(1.01);
 }
 
