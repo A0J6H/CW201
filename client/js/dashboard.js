@@ -192,10 +192,6 @@ profileBtn.addEventListener("click", async () => {
   window.location.href = "profile.html";
 });
 
-const wishlistBtn = document.getElementById("wishlistBtn"); 
-wishlistBtn.addEventListener("click", () => { 
-  window.location.href = "wishlistMain.html";
-});
 
 function addBook(div, coverUrl, book) {
   const scroller = document.getElementById(div);
