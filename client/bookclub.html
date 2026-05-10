@@ -8,27 +8,38 @@
 
     <body>
         <div id="pageContainer">
-            <h1 id="clubTitle">Club Name</h1>
             <div id="sidebar">
-                    <h3>Options</h3>
-                    <h3>Go</h3>
-                    <h3>Here</h3>
             </div>
             <div id="navBar">
-                <button id="chatBtn">Chat</button>
+                <button id="forumBtn">Forum</button>
                 <button id="pollsBtn">Polls</button>
                 <button id="readingBtn">Reading</button>
             </div>
-            
+            <template id="bookClubTemplate">
+            <h1 id="clubTitle">Club Name</h1>
+            <p id="clubDescription">Club description goes here</p>
             <div id="mainContentContainer">
                 <div id="contentDisplay">
                     <p>Main content goes here</p>
                 </div>
             </div>
+            </template>
+            <div id="cloneContainer"></div>
         </div>
+
+        <template id="postTemplate">
+            <div class="postContainer">
+                <h3 id="postTitle">Post Title</h3>
+                <p id="postAuthor">By: Author Name</p>
+                <p id="postContent">Post content goes here</p>
+            </div>
+            <button id="addPostButton">Add Post</button>
+</form>
+        </template>
 
 
         <button id = "redirectBtn">Back to search</button>
+        
 
 
         <!-- note: token.js is necessary on any page that makes auth requests! -->
