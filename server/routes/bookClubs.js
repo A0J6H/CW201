@@ -41,7 +41,7 @@ router.get("/userclubs", verifyToken, async (req, res) => {
 router.post("/addPost", async (req,res) => {
   const {clubID, userID, title, post} = req.body;
 
-  // validation (check if all fields filled 
+  // check all fields filled
   if (!clubID || !userID || !title || !post) {
     return res.status(400).json({ error: "All fields are required" });
   }

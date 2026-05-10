@@ -69,6 +69,32 @@ document.getElementById("forumBtn").addEventListener("click", async() => {
     const clone = template.content.cloneNode(true);
     mainContainer.appendChild(clone);
 
+    //add event listener for add post button, send request to add post with input content
+    mainContainer.querySelector("#addPostButton").addEventListener("click", async () => {
+        const title = document.getElementById("newPostTitle").value;
+        const post = document.getElementById("newPostContent").value;
+        const clubID = clubData[currentClubIndex].clubID;
+
+        const response = await fetch("http://localhost:5000/api/bookclubs/addPost", {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ clubID, userID: clubData[currentClubIndex].userID, title, post })
+        });
+
+        if (response.ok) {
+
+            console.log("Post created successfully");
+
+            document.getElementById("newPostTitle").value = "";
+            document.getElementById("newPostContent").value = "";
+        }
+        else {
+            console.error("Failed to create post");
+        }
+    });
+
     //get all forum posts
     const response = await fetch(`http://localhost:5000/api/bookclubs/getClubPosts?clubID=${clubData[currentClubIndex].clubID}`);
     const data = await response.json();
@@ -93,26 +119,6 @@ document.getElementById("forumBtn").addEventListener("click", async() => {
     }
 });
 
-
-document.getElementById("redirectBtn").addEventListener("click", () => {
-    window.location.href = "dashboard.html";
-});
-
-// log out: get rid of the token and direct the user back to the log in page
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-
-    // remove refresh token (via auth.js)
-    await fetch("http://localhost:5000/auth/logout", {
-        method: "POST",
-        credentials: "include"
-    });
-
-    // remove the regular access token
-    localStorage.removeItem("token");
-    console.log("pressing log out")
-    window.location.href = "index.html";
-});
-
 function loadClubContent(clubData, index) {
     //load all initial content relevant to club and display to the user
     currentClubIndex = index;
@@ -124,3 +130,5 @@ function loadClubContent(clubData, index) {
     clone.getElementById("clubDescription").textContent = clubData[index].description;
     cloneContainer.appendChild(clone);
 }
+
+document.getElementById("addPostButton")
