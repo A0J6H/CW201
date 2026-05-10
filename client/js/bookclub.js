@@ -1,5 +1,6 @@
 
 let clubData = null;
+let currentClubIndex = 0;
 
 
 // --- displays relevant user details if user logged in + log out option ---
@@ -59,12 +60,40 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-document.getElementById("chatBtn").addEventListener("click", () => {
+document.getElementById("forumBtn").addEventListener("click", async() => {
+    //initiate main content container with forum 
     mainContainer = document.getElementById("mainContentContainer");
-    document.getElementById("mainContentContainer").innerHTML = "";
-    
+    mainContainer.innerHTML = "";
 
+    let template = document.getElementById("forumTemplate");
+    const clone = template.content.cloneNode(true);
+    mainContainer.appendChild(clone);
+
+    //get all forum posts
+    const response = await fetch(`http://localhost:5000/api/bookclubs/getClubPosts?clubID=${clubData[currentClubIndex].clubID}`);
+    const data = await response.json();
+
+    if (response.ok) {
+        //add each post to the main display container
+        console.log("Posts fetch successful:", data);
+
+        const postContainer = mainContainer.querySelector("#postContainer");
+
+        const postTemplate = document.getElementById("postTemplate");
+
+        data.forEach(post => {
+            let clone = postTemplate.content.cloneNode(true);
+
+            clone.querySelector("#postTitle").textContent = post.title;
+            clone.querySelector("#postAuthor").textContent = `By: ${post.username}`;
+            clone.querySelector("#postContent").textContent = post.post;
+
+            mainContainer.appendChild(clone);
+        })
+    }
 });
+
+
 document.getElementById("redirectBtn").addEventListener("click", () => {
     window.location.href = "dashboard.html";
 });
@@ -85,6 +114,8 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 });
 
 function loadClubContent(clubData, index) {
+    //load all initial content relevant to club and display to the user
+    currentClubIndex = index;
     cloneContainer = document.getElementById("cloneContainer");
     let template = document.getElementById("bookClubTemplate");
     cloneContainer.innerHTML = "";

@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
 
 router.get("/userclubs", verifyToken, async (req, res) => {
   try {
-
+    //get all the clubs for a given user
     db.query(
       "SELECT members.userID, members.clubID, book_clubs.name, book_clubs.description FROM members JOIN book_clubs ON members.clubID = book_clubs.clubID WHERE members.userID = ?",
       [req.user.userID],
@@ -41,7 +41,7 @@ router.get("/userclubs", verifyToken, async (req, res) => {
 router.post("/addPost", async (req,res) => {
   const {clubID, userID, title, post} = req.body;
 
-  // validation (check if all fields filled & password typed correctly)
+  // validation (check if all fields filled 
   if (!clubID || !userID || !title || !post) {
     return res.status(400).json({ error: "All fields are required" });
   }
@@ -66,5 +66,26 @@ router.post("/addPost", async (req,res) => {
 
 });
 
+router.get("/getClubPosts", async (req, res) => {
+    //get all posts in club
+  try {
+    db.query(
+      "SELECT users.username, club_posts.title, club_posts.post FROM club_posts JOIN users ON club_posts.userID = users.userID WHERE club_posts.clubID = ?",
+      [req.query.clubID],
+      (err, results) => {
+        if (err) return res.status(500).json({ error: "Failed to fetch club posts" });
+
+        if (results.length === 0) {
+          return res.status(404).json({ error: "Club posts not found" });
+        }
+
+        res.json(results);
+      }
+    );
+
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 module.exports = router;
