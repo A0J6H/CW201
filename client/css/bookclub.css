@@ -122,3 +122,22 @@ body{
     width: 1fr;
     width: 80%;
 }
+
+#bookContainer{
+    grid-row-start: 2;
+    background-color: white;
+    width: 1fr;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgb(255, 255, 255);
+}
+
+#bookCover:hover{
+    transform: scale(1.01);
+    box-shadow: 1px 1px 5px rgb(255, 255, 255);
+    width: 50%;
+}
+#bookCover{
+    transform: scale(1.01);
+    box-shadow: 1px 1px 5px rgb(255, 255, 255);
+    width: 50%;
+}

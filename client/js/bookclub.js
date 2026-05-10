@@ -150,7 +150,9 @@ document.getElementById("readingBtn").addEventListener("click", async() => {
 
             clone.querySelector("#bookTitle").textContent = book.title;
             clone.querySelector("#bookCover").src = `https://covers.openlibrary.org/b/olid/${book.cover}-M.jpg`;
-
+            clone.getElementById("bookCover").addEventListener("click", () => {
+                    window.location.href = `bookpage.html?id=${book.bookID}`
+                })
             mainContainer.appendChild(clone);
         })
     }
