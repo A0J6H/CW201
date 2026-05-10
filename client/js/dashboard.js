@@ -53,7 +53,6 @@ async function addToWishlist(book, btn) {
     });
 
     if (res.status === 409) {
-      // Already in wishlist
       btn.textContent = "✓ Saved";
       btn.classList.add("wishlisted");
       return;
@@ -66,14 +65,89 @@ async function addToWishlist(book, btn) {
       return;
     }
 
-    // Success
+    // Success — add the cover to the wishlist scroller immediately
     btn.textContent = "✓ Saved";
     btn.classList.add("wishlisted");
+    addBookToWishlistScroller(book);
 
   } catch (err) {
     console.error("Wishlist error:", err);
     btn.disabled = false;
     btn.textContent = "♡ Wishlist";
+  }
+}
+
+// Adds a single book cover into the wishlist scroller
+function addBookToWishlistScroller(book) {
+  const scroller = document.getElementById("wishlistScroller");
+  const emptyMsg = document.getElementById("wishlistEmpty");
+
+  // hide the "no books" message once we add one
+  if (emptyMsg) emptyMsg.hidden = true;
+
+  const coverUrl = book.coverId
+    ? `https://covers.openlibrary.org/b/id/${book.coverId}-M.jpg`
+    : null;
+
+  if (!coverUrl) return;
+
+  // avoid duplicates in the scroller
+  const existing = scroller.querySelector(`img[data-key="${book.key}"]`);
+  if (existing) return;
+
+  const img = document.createElement("img");
+  img.src = coverUrl;
+  img.alt = book.title;
+  img.title = book.title;
+  img.dataset.key = book.key;
+  img.addEventListener("click", () => {
+    window.location.href = `bookpage.html?id=${book.key}`;
+  });
+
+  scroller.appendChild(img);
+}
+
+// Loads the full wishlist scroller on page load
+async function loadWishlistScroller() {
+  const token = getToken();
+  if (!token) return;
+
+  try {
+    const res = await fetch("http://localhost:5000/api/wishlist", {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    if (!res.ok) return;
+
+    const books = await res.json();
+    const scroller = document.getElementById("wishlistScroller");
+    const emptyMsg = document.getElementById("wishlistEmpty");
+
+    if (books.length === 0) return;
+
+    if (emptyMsg) emptyMsg.hidden = true;
+
+    books.forEach(book => {
+      const coverUrl = book.cover_id
+        ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
+        : null;
+
+      if (!coverUrl) return;
+
+      const img = document.createElement("img");
+      img.src = coverUrl;
+      img.alt = book.title;
+      img.title = book.title;
+      img.dataset.key = book.book_key;
+      img.addEventListener("click", () => {
+        window.location.href = `bookpage.html?id=${book.book_key}`;
+      });
+
+      scroller.appendChild(img);
+    });
+
+  } catch (err) {
+    console.error("Failed to load wishlist scroller:", err);
   }
 }
 
@@ -89,7 +163,6 @@ function displayBooks(books) {
       ? `https://covers.openlibrary.org/b/id/${book.coverId}-M.jpg`
       : "";
 
-    // FIX: wishlist button must be in the innerHTML so querySelector can find it
     div.innerHTML = `
       <h3>${book.title}</h3>
       <p><a href="authors.html?author=${encodeURIComponent(book.author || "Unknown author")}"
@@ -99,7 +172,6 @@ function displayBooks(books) {
       <button class="wishlist-btn" onclick="event.stopPropagation()">♡ Wishlist</button>
     `;
 
-    // Wire up wishlist button
     const wishlistBtn = div.querySelector(".wishlist-btn");
     wishlistBtn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -114,77 +186,70 @@ function displayBooks(books) {
   });
 }
 
-
 const profileBtn = document.getElementById("profileBtn");
-
 profileBtn.addEventListener("click", async () => {
-  console.log("presed")
+  console.log("presed");
   window.location.href = "profile.html";
 });
 
 const wishlistBtn = document.getElementById("wishlistBtn"); 
-wishlistBtn.addEventListener("click", async () => { 
-  window.location.href = "wishlist.html";
+wishlistBtn.addEventListener("click", () => { 
+  window.location.href = "wishlistMain.html";
 });
 
 function addBook(div, coverUrl, book) {
   const scroller = document.getElementById(div);
 
-  // Create a new image
   const newImage = document.createElement("img");
-
-  // Set the image source
   newImage.src = coverUrl;
-
-  // Optional alt text
   newImage.alt = "New Book";
   newImage.addEventListener("click", async () => {
     createReview(book);
   });
 
-  // Add image into the scroller
   scroller.appendChild(newImage);
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
   let userData;
-  try {
-        // send a request for profile, includes the JWT in the header
-        // route is: profile.js -> authmiddleware.js -> auth.js if successful
-        // because we're using refresh tokens, we need a fetchWithAuth instead of fetch
-        const res = await fetch("http://localhost:5000/auth/profile", {
-        method: "GET",
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-        });
 
-        const data = await res.json();
-        userData = data;
-    } catch (err) {
-        // for general network errors, although this should be rarely triggered
-        console.error(err);
-    }
+  try {
+    const res = await fetch("http://localhost:5000/auth/profile", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    const data = await res.json();
+    userData = data;
+  } catch (err) {
+    console.error(err);
+  }
 
   console.log(userData);
 
+  // Load wishlist scroller
+  await loadWishlistScroller();
+
+  // Load recently viewed
   const response = await fetch(
     `http://localhost:5000/api/books/userBooks?q=${userData.userID}`
-    );
+  );
 
-    const apiIDs = await response.json();
-    console.log("bookIDs", apiIDs);
+  const apiIDs = await response.json();
+  console.log("bookIDs", apiIDs);
 
-    for(let i=0; i<apiIDs.length; i++){
-      const apiID = apiIDs[i].apiID;
-      const res = await fetch(`http://127.0.0.1:5000/api/books/book?q=${apiID}`);
-      const data = await res.json();
+  for (let i = 0; i < apiIDs.length; i++) {
+    const apiID = apiIDs[i].apiID;
+    const res = await fetch(`http://127.0.0.1:5000/api/books/book?q=${apiID}`);
+    const data = await res.json();
 
-      const coverUrl = data.coverId
-        ? `https://covers.openlibrary.org/b/id/${data.coverId}-M.jpg`
-        : "";
+    const coverUrl = data.coverId
+      ? `https://covers.openlibrary.org/b/id/${data.coverId}-M.jpg`
+      : "";
 
-      addBook("recentlyViewed", coverUrl, apiID);
-    };
+    addBook("recentlyViewed", coverUrl, apiID);
+  };
 });
