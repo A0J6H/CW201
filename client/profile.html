@@ -11,7 +11,6 @@
 
             <div id="profileHeader">
                 <p id="username">@pierceg's Library</p>
-                <p id="bio">Bio stuff like i love books especially horror ones and my favourite author is JRR Tolkien </p>
             </div>
 
             <div id="profileDetailsContainer">
@@ -21,9 +20,11 @@
                     <p id="favouriteBooks">The Lord of the Rings</p>
                 </div>
                 <div class="vl"></div>
-                <div id="createdAt">
+                <div id="stats">
                     <h2>User Since</h2>
-                    <p id="createdAt">12/06/25</p>
+                    <p id="createdDate">12/06/25</p>
+                    <p id="numBooks">Number of books reviewed: 5</p>
+                    <p id="avgRating">Average rating: 4.5/5</p>
                 </div>
 
             </div>
@@ -33,18 +34,19 @@
                 <h1>Collection</h1>
 
                 <div id="bookDisplayContainer">
+                    <template id="bookTemplate">
+                        <div class="bookContainer">
 
-                    <div class="bookContainer">
+                            <p id="bookTitle">The Book of Books</p>
+                            <img id="bookCover" src="https://covers.openlibrary.org/b/isbn/9780385533225-S.jpg">
 
-                        <p id="bookTitle">The Book of Books</p>
-                        <img id="bookCover" src="https://covers.openlibrary.org/b/isbn/9780385533225-S.jpg">
+                            <hr>
 
-                        <hr>
+                            <p id="bookRating">1</p>
+                            <p id="bookReview">it was alright</p>
 
-                        <p id="bookRating">1</p>
-                        <p id="bookReview">it was alright</p>
-
-                    </div>
+                        </div>
+                    </template>
                     
                 </div>
             </div>
@@ -58,6 +60,6 @@
 
         <!-- note: token.js is necessary on any page that makes auth requests! -->
         <script src="js/token.js"></script>
-        <!-- <script src="js/profile.js"></script> -->
-    </body>
+        <script src="js/profile.js"></script>
+ 2    </body>
 </html>

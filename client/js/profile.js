@@ -28,19 +28,37 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (res.ok) {
             // if token valid, display details
-            document.getElementById("username").textContent = `Username: ${data.username}`;
+            document.getElementById("username").textContent = `${data.username}'s library`;
             // the raw createdAt datetime comes out a little odd-looking, keep only the first 10 chars
-            formattedDate = data.createdAt.slice(0,10)
-            document.getElementById("createdAt").textContent = `Member since: ${formattedDate}`;
-
-            //get id=bio
-
-            document.getElementById("bio").textContent = data.bio;
+            const formattedDate = data.createdAt.slice(0,10)
+            document.getElementById("createdDate").textContent = `${formattedDate}`;
+            document.getElementById("numBooks").textContent = `Number of books reviewed: ${data.books.length}`;
             //get id=favouriteBooks - set href review page
-            const favouriteBooks = data.favouriteBooks;
+            let template = document.getElementById("bookTemplate");
 
             //for id=bookContainer
             //get each id=bookTitle, bookCover - set href review page, bookRating, bookReview
+            let sum = 0;
+            for (const book of data.books) {
+                let clone = template.content.cloneNode(true);
+                clone.getElementById("bookTitle").textContent = `${book.title}`;
+                clone.getElementById("bookCover").src = `https://covers.openlibrary.org/b/olid/${book.cover}-M.jpg`;
+                clone.getElementById("bookReview").textContent = `${book.review}`;
+                clone.getElementById("bookRating").textContent = `${book.rating}/5`;
+                sum+= book.rating;
+                document.getElementById("bookDisplayContainer").appendChild(clone);
+            }
+            console.log(data.books);
+            //get average rating across all books, round to 1 decimal place
+            let avgRating = sum / data.books.length;
+            document.getElementById("avgRating").textContent = `Average rating: ${ avgRating.toFixed(1) }/5`;
+
+            // get highest rated book and display as favourite book
+            let booksSorted = data.books.sort((a, b) => b.rating - a.rating);
+            document.getElementById("favouriteBooks").textContent = `${booksSorted[0].title}`;
+            
+
+            
         } 
         
         else {
