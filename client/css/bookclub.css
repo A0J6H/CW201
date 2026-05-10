@@ -11,7 +11,7 @@
 
 #navBar{
     grid-row: 2;
-    grid-column: 1 / -1;
+    grid-column: 2 / -1;
     width: 2fr;
     justify-items: center;
 }
@@ -25,12 +25,13 @@
 
 #mainContentContainer{
     grid-row: 3;
+    grid-column: 2/-1;
     display: grid;
     grid-template-columns: auto auto auto auto;
 }
 
-#mainContentContainer #mCSidebar{
-    grid-row: 1/-1;
+#sidebar{
+    grid-row: 2;
     grid-column: 1;
 }
 
