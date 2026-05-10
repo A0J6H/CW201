@@ -52,3 +52,8 @@ profileBtn.addEventListener("click", async () => {
   console.log("presed")
   window.location.href = "profile.html";
 })
+
+
+document.getElementById("clubsBtn").addEventListener("click", () => {
+    window.location.href = "bookclub.html";
+});

@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         
 
         if (res.ok) {
-            console.log("Club fetch successful:", data);
             if (data.length > 0) {
                 let ind = 0;
                 data.forEach((club, ind) => {
@@ -131,4 +130,32 @@ function loadClubContent(clubData, index) {
     cloneContainer.appendChild(clone);
 }
 
-document.getElementById("addPostButton")
+document.getElementById("readingBtn").addEventListener("click", async() => {
+    mainContainer = document.getElementById("mainContentContainer");
+    mainContainer.innerHTML = "";
+
+    const response = await fetch(`http://localhost:5000/api/bookclubs/getClubBooks?clubID=${clubData[currentClubIndex].clubID}`);
+    const data = await response.json();
+
+    if (response.ok) {
+        //add each book to the main display container
+        console.log("Books fetch successful:", data);
+
+        const bookContainer = mainContainer.querySelector("#bookContainer");
+
+        const bookTemplate = document.getElementById("bookTemplate");
+
+        data.forEach(book => {
+            let clone = bookTemplate.content.cloneNode(true);
+
+            clone.querySelector("#bookTitle").textContent = book.title;
+            clone.querySelector("#bookCover").src = `https://covers.openlibrary.org/b/olid/${book.cover}-M.jpg`;
+
+            mainContainer.appendChild(clone);
+        })
+    }
+});
+
+document.getElementById("redirectBtn").addEventListener("click", () => {
+    window.location.href = "dashboard.html";
+});
