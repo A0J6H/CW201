@@ -165,8 +165,8 @@ function displayBooks(books) {
 
     div.innerHTML = `
       <h3>${book.title}</h3>
-      <p><a href="authors.html?author=${encodeURIComponent(book.author || "Unknown author")}"
-        onclick="event.stopPropagation()">${book.author || "Unknown author"}</a></p>
+      <p><a href="authors.html?author=${encodeURIComponent(book.author|| "Unknown author")}" 
+      onclick="event.stopPropagation()"> ${book.author|| "Unknown author"}</a></p>
       <p>${book.year || "No year available"}</p>
       ${coverUrl ? `<img src="${coverUrl}" />` : ""}
       <button class="wishlist-btn" onclick="event.stopPropagation()">♡ Wishlist</button>
@@ -248,4 +248,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     addBook("recentlyViewed", coverUrl, apiID);
   };
+})
+
+
+document.getElementById("clubsBtn").addEventListener("click", () => {
+    window.location.href = "bookclub.html";
 });
