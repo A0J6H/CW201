@@ -42,9 +42,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             for (const book of data.books) {
                 let clone = template.content.cloneNode(true);
                 clone.getElementById("bookTitle").textContent = `${book.title}`;
-                clone.getElementById("bookCover").src = `https://covers.openlibrary.org/b/olid/${book.cover}-M.jpg`;
+                clone.getElementById("bookCover").src = `https://covers.openlibrary.org/b/id/${book.cover}-M.jpg`;
                 clone.getElementById("bookCover").addEventListener("click", () => {
-                    window.location.href = `bookpage.html?id=${book.bookID}`
+                    window.location.href = `bookpage.html?id=${book.apiID}`
                 })
                 clone.getElementById("bookReview").textContent = `${book.review}`;
                 clone.getElementById("bookRating").textContent = `${book.rating}/5`;

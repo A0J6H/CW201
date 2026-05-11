@@ -149,9 +149,9 @@ document.getElementById("readingBtn").addEventListener("click", async() => {
             let clone = bookTemplate.content.cloneNode(true);
 
             clone.querySelector("#bookTitle").textContent = book.title;
-            clone.querySelector("#bookCover").src = `https://covers.openlibrary.org/b/olid/${book.cover}-M.jpg`;
+            clone.querySelector("#bookCover").src = `https://covers.openlibrary.org/b/id/${book.cover}-M.jpg`;
             clone.getElementById("bookCover").addEventListener("click", () => {
-                    window.location.href = `bookpage.html?id=${book.bookID}`
+                    window.location.href = `bookpage.html?id=${book.apiID}`
                 })
             mainContainer.appendChild(clone);
         })
