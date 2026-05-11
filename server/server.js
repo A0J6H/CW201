@@ -13,15 +13,18 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 
+app.use("/api/wishlist", require("./routes/wishlist"));
 app.use("/api/books",require("./routes/books"));
+
+app.use("/api/bookclubs",require("./routes/bookClubs.js"));
 app.use("/api/authors",require("./routes/authors"));
+
 
 app.get("/", (req, res) => {
     res.send("Server running");
 });
 
 app.use("/auth",require("./routes/auth"));
-
 
 app.listen(5000, () => {
   console.log("Server running on http://localhost:5000");

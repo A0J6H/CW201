@@ -184,7 +184,18 @@ router.get("/profile", verifyToken, async (req, res) => {
         }
 
         // return details about the logged in user
-        res.json(results[0]);
+        const user = results[0];
+        db.query(
+          "SELECT user_books.bookID, books.title, books.cover,user_books.review, user_books.rating, user_books.createdAt FROM user_books JOIN books ON user_books.bookID = books.bookID WHERE user_books.userID = ?",
+          [req.user.userID],
+          (err2, bookResults) => {
+            if (err2) return res.status(500).json({ error: "Failed to fetch user books" });
+
+            user.books = bookResults;
+            return res.json(user);
+          }
+        )
+        
       }
     );
 

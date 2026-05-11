@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Profile</title>
+        <link rel="stylesheet" href="css/bookclub.css">
+    </head>
+
+    <body>
+        <div id="pageContainer">
+            <div id="sidebar">
+            </div>
+            <div id="navBar">
+                <button id="forumBtn">Forum</button>
+                <button id="readingBtn">Reading</button>
+            </div>
+            <template id="bookClubTemplate">
+            <h1 id="clubTitle">Club Name</h1>
+            <p id="clubDescription">Club description goes here</p>
+            <div id="mainContentContainer">
+            </div>
+            </template>
+            <div id="cloneContainer"></div>
+        </div>
+
+        <template id="forumTemplate">
+            <div id="formContainer">
+            <input type="text" id="newPostTitle" placeholder="An exciting title...">
+            <input type="text" id="newPostContent" placeholder="An even more exciting post...">
+            <button id="addPostButton">Add Post</button>
+            </div>
+        </template>
+
+        <template id="postTemplate">
+            <div id="postContainer">
+                <h3 id="postTitle">Post Title</h3>
+                <p id="postAuthor">By: Author Name</p>
+                <p id="postContent">Post content goes here</p>
+            </div>
+        </template>
+
+        <template id="bookTemplate">
+            <div id="bookContainer">
+                <h3 id="bookTitle">Book Title</h3>
+                <img id="bookCover" src="">
+            </div>
+        </template>
+
+        <button id = "redirectBtn">Back to search</button>
+        
+
+
+        <!-- note: token.js is necessary on any page that makes auth requests! -->
+        <script src="js/token.js"></script>
+        <script src="js/bookclub.js"></script>
+    </body>
+</html>
