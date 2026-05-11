@@ -39,7 +39,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     .catch(err => console.error(err));
 
-        fetch("http://localhost:5000/api/books/reviewInsert", {//Adds the review to the mysql db
+        
+
+
+});
+
+document.getElementById("submitReview").addEventListener("click", async () => {
+    console.log("clicked");
+    review = document.getElementById("reviewInput").value;
+    rating = document.getElementById("ratingInput").value;
+
+    fetch("http://localhost:5000/api/books/reviewInsert", {//Adds the review to the mysql db
         method: "POST",
         headers: {
         "Content-Type": "application/json"
@@ -48,8 +58,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         userID: 1,
         bookID: 8,
         status: "read",
-        review: "Test",
-        rating: 5,
+        review: review,
+        rating: rating,
         })//userID, bookID, status, review, rating
     })
     .then(res => res.json())
@@ -57,6 +67,4 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(data);
     })
     .catch(err => console.error(err));
-
-
 });
