@@ -91,7 +91,7 @@ router.get("/getClubPosts", async (req, res) => {
 router.get("/getClubBooks", async (req, res) => {
     //get every book from users in club
     try {
-        db.query("SELECT books.title, books.cover, books.bookID FROM user_books JOIN books on user_books.bookID = books.bookID JOIN members ON user_books.userID = members.userID WHERE members.clubID = ?",
+        db.query("SELECT books.title, books.cover, books.bookID, books.apiID FROM user_books JOIN books on user_books.bookID = books.bookID JOIN members ON user_books.userID = members.userID WHERE members.clubID = ?",
             [req.query.clubID], (err, results) => {
             if (err) console.log(err);
             if (err) return res.status(500).json({ error: "Failed to fetch club books" });
